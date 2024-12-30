@@ -1,0 +1,60 @@
+#Program 1
+#include <stdio.h>
+#include <stdlib.h>
+#include <dirent.h> // For directory operations
+
+int main() {
+    char buff[100];  // Buffer to store directory name
+    DIR *dirp;       // Pointer to directory
+    struct dirent *dptr; // Pointer to structure for directory entries
+
+    printf("\n\nENTER DIRECTORY NAME: ");
+    scanf("%s", buff);
+
+    // Open the directory
+    if ((dirp = opendir(buff)) == NULL) {
+        printf("The given directory does not exist.\n");
+        exit(1);
+    }
+
+    printf("Contents of the directory:\n");
+
+    // Read and display the directory entries
+    while ((dptr = readdir(dirp)) != NULL) {
+        printf("%s\n", dptr->d_name);
+    }
+
+    // Close the directory
+    closedir(dirp);
+
+    return 0;
+}
+#Program 2
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+int main() {
+    int pid, pid1, pid2;
+
+    // Create a child process
+    pid = fork();
+
+    if (pid < 0) {
+        // Error in process creation
+        printf("ERROR IN PROCESS CREATION\n");
+        exit(1);
+    }
+
+    if (pid != 0) {
+        // In the parent process
+        pid1 = getpid(); // Get parent process ID
+        printf("In the parent process, ID is %d\n", pid1);
+    } else {
+        // In the child process
+        pid2 = getpid(); // Get child process ID
+        printf("In the child process, ID is %d\n", pid2);
+    }
+
+    return 0;
+}
